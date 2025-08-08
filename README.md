@@ -1,4 +1,4 @@
-# FASt-LDM
+# FAST-LDM
 
 This is the repository that contains source code for the [FAST-LDM website](https://fast-ldm.github.io).
 
