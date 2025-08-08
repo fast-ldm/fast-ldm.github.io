@@ -1,8 +1,8 @@
-# Nerfies
+# FASt-LDM
 
-This is the repository that contains source code for the [Nerfies website](https://fast-ldm.github.io).
+This is the repository that contains source code for the [FAST-LDM website](https://fast-ldm.github.io).
 
-If you find Nerfies useful for your work please cite:
+If you find FAST-LDM useful for your work please cite:
 ```
 @article{wang2025fast,
   title={FAST: Flexibly Controllable Arbitrary Style Transfer via Latent Diffusion models},
