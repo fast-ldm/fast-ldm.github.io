@@ -1,17 +1,50 @@
-# FAST-LDM
+# FAST
 
-This is the repository that contains source code for the [FAST-LDM website](https://fast-ldm.github.io).
+Source for the [FAST project website](https://fast-ldm.github.io/).
 
-If you find FAST-LDM useful for your work please cite:
+**FAST: Flexibly Controllable Arbitrary Style Transfer via Latent Diffusion Models**
+
+ACM Transactions on Multimedia Computing, Communications, and Applications, 21(9), Article 268, September 2025.
+
+[Paper](https://doi.org/10.1145/3748655) · [PDF](https://dl.acm.org/doi/pdf/10.1145/3748655) · [Code](https://github.com/wd1511/FAST)
+
+The previously linked [arXiv:2401.05870](https://arxiv.org/abs/2401.05870) is titled **HiCAST** (2024); the website labels it as earlier work separately from the published FAST article.
+
+## Local preview
+
+This is a static website with no build step or external runtime dependencies.
+
+```sh
+python3 -m http.server 8000 --bind 127.0.0.1
 ```
+
+Open http://127.0.0.1:8000 in a browser. GitHub Pages serves `index.html` from this repository.
+
+## Citation
+
+Publication metadata is checked against the [ACM article](https://dl.acm.org/doi/10.1145/3748655) and [Crossref record](https://api.crossref.org/works/10.1145/3748655).
+
+```bibtex
 @article{wang2025fast,
-  title={FAST: Flexibly Controllable Arbitrary Style Transfer via Latent Diffusion models},
-  author={Wang, Hanzhang and Wang, Haoran and Yu, Zhongrui and Sun, Mingming and Jiang, Junjun and Liu, Xianming and Zhai, Deming},
-  journal={ACM Transactions on Multimedia Computing, Communications and Applications},
-  publisher={ACM New York, NY},
-  year={2025},
+  title = {{FAST}: Flexibly Controllable Arbitrary Style Transfer via Latent Diffusion Models},
+  author = {Wang, Hanzhang and Wang, Haoran and Yu, Zhongrui and Sun, Mingming and Jiang, Junjun and Liu, Xianming and Zhai, Deming},
+  journal = {ACM Transactions on Multimedia Computing, Communications, and Applications},
+  volume = {21},
+  number = {9},
+  articleno = {268},
+  numpages = {20},
+  year = {2025},
+  month = sep,
+  publisher = {Association for Computing Machinery},
+  doi = {10.1145/3748655},
+  url = {https://doi.org/10.1145/3748655}
 }
 ```
 
-# Website License
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+## Figures
+
+The images in `static/images/fast/` are Figures 1, 2, 4, 6, 7, and 8 from the published FAST paper. See [the asset notes](static/images/fast/README.md) for their source URLs. They are research results, not generated illustrations.
+
+## Website license
+
+Website code is licensed under [Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/), with attribution to the original [Nerfies website](https://nerfies.github.io/). Paper figures retain their original rights.
