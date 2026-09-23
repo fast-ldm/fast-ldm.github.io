@@ -1,485 +1,201 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="description"
-        content="">
-  <meta name="keywords" content="Arbitrary style transfer, diffusion model, style-adapter">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FAST</title>
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-
-    gtag('config', 'G-PYVRSFMDRL');
-  </script>
-
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
-
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <title>FAST: Flexibly Controllable Arbitrary Style Transfer via Latent Diffusion Models</title>
+  <meta name="description" content="FAST combines latent diffusion models and composable Style-Adapters for flexibly controllable image and video style transfer. Published in ACM TOMM, 2025.">
+  <meta name="keywords" content="FAST, arbitrary style transfer, latent diffusion, Style-Adapter, video style transfer">
+  <link rel="canonical" href="https://fast-ldm.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://fast-ldm.github.io/">
+  <meta property="og:title" content="FAST: Flexibly Controllable Arbitrary Style Transfer via Latent Diffusion Models">
+  <meta property="og:description" content="Flexible control over image and video stylization with latent diffusion and Style-Adapters. ACM TOMM 2025.">
+  <meta property="og:image" content="https://fast-ldm.github.io/static/images/fast/overview.jpg">
+  <meta property="og:image:alt" content="FAST style transfer with depth, segmentation, and edge control.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="citation_title" content="FAST: Flexibly Controllable Arbitrary Style Transfer via Latent Diffusion Models">
+  <meta name="citation_author" content="Hanzhang Wang">
+  <meta name="citation_author" content="Haoran Wang">
+  <meta name="citation_author" content="Zhongrui Yu">
+  <meta name="citation_author" content="Mingming Sun">
+  <meta name="citation_author" content="Junjun Jiang">
+  <meta name="citation_author" content="Xianming Liu">
+  <meta name="citation_author" content="Deming Zhai">
+  <meta name="citation_publication_date" content="2025/09/10">
+  <meta name="citation_journal_title" content="ACM Transactions on Multimedia Computing, Communications, and Applications">
+  <meta name="citation_volume" content="21">
+  <meta name="citation_issue" content="9">
+  <meta name="citation_doi" content="10.1145/3748655">
+  <meta name="citation_pdf_url" content="https://dl.acm.org/doi/pdf/10.1145/3748655">
+  <link rel="icon" href="./static/images/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/favicon.svg">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
+  <script src="./static/js/index.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav class="site-nav container" aria-label="Main navigation">
+      <a class="wordmark" href="#top" aria-label="FAST home">FAST<span class="wordmark-dot">.</span></a>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#BibTeX">Citation</a>
+      </div>
+    </nav>
+  </header>
 
-<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://keunhong.com">
-      <span class="icon">
-          <i class="fas fa-home"></i>
-      </span>
-      </a>
+  <main id="main">
+    <section class="publication-header container" id="top" aria-labelledby="paper-title">
+      <a class="venue" href="https://doi.org/10.1145/3748655">ACM TOMM 2025 <span aria-hidden="true">↗</span></a>
+      <h1 id="paper-title"><span class="title-accent">FAST:</span> Flexibly Controllable Arbitrary Style Transfer via Latent Diffusion Models</h1>
+      <p class="paper-summary">Your content. Any style. Flexible control.</p>
+      <div class="publication-authors">
+        <span><a href="https://wd1511.github.io/">Hanzhang Wang</a><sup>1</sup>,</span>
+        <span><a href="https://scholar.google.com.hk/citations?user=xfnL2IEAAAAJ&amp;hl=zh-TW">Haoran Wang</a><sup>2</sup>,</span>
+        <span><a href="https://scholar.google.com.hk/citations?user=i4PVpw4AAAAJ&amp;hl=zh-CN">Zhongrui Yu</a><sup>3</sup>,</span>
+        <span><a href="https://rudaoshi.github.io/">Mingming Sun</a><sup>4</sup>,</span>
+        <span><a href="https://homepage.hit.edu.cn/jiangjunjun?lang=zh">Junjun Jiang</a><sup>1</sup>,</span>
+        <span><a href="https://homepage.hit.edu.cn/xmliu?lang=zh">Xianming Liu</a><sup>1</sup>,</span>
+        <span><a href="https://homepage.hit.edu.cn/zhaideming?lang=zh">Deming Zhai</a><sup>1</sup></span>
+      </div>
+      <div class="affiliations">
+        <span><sup>1</sup>Harbin Institute of Technology, Harbin, China</span>
+        <span><sup>2</sup>BGI Research, Beijing, China</span>
+        <span><sup>3</sup>ETH Zurich, Zürich, Switzerland</span>
+        <span><sup>4</sup>AGI Lab, Beijing Institute of Mathematical Sciences and Applications, Beijing, China</span>
+      </div>
+      <p class="publication-details">Volume 21 · Issue 9 · Article 268 · September 2025</p>
+      <div class="publication-links">
+        <a class="button button-primary" href="https://dl.acm.org/doi/10.1145/3748655">Read the paper <span aria-hidden="true">↗</span></a>
+        <a class="button" href="https://dl.acm.org/doi/pdf/10.1145/3748655">PDF <span aria-hidden="true">↗</span></a>
+        <a class="button" href="https://github.com/wd1511/FAST">Code <span aria-hidden="true">↗</span></a>
+        <a class="button" href="#BibTeX">Cite this work <span aria-hidden="true">↓</span></a>
+      </div>
+      <p class="preprint-note">Earlier work: <a href="https://arxiv.org/abs/2401.05870">HiCAST on arXiv (2024)</a>.</p>
+    </section>
 
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Research
-        </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://hypernerf.github.io">
-            HyperNeRF
+    <section class="teaser container" aria-label="FAST at a glance">
+      <figure class="paper-figure">
+          <a class="figure-link" href="./static/images/fast/overview.jpg" target="_blank" rel="noopener" aria-label="Enlarge: Comparison of FAST stylization with depth, segmentation, edge, and combined control against previous methods.">
+            <img width="648" height="190" src="./static/images/fast/overview.jpg" alt="Comparison of FAST stylization with depth, segmentation, edge, and combined control against previous methods." fetchpriority="high">
+            <span class="figure-zoom" aria-hidden="true">View full size ↗</span>
           </a>
-          <a class="navbar-item" href="https://nerfies.github.io">
-            Nerfies
+          <figcaption><strong>One content image, multiple ways to stylize.</strong> FAST combines a style reference with depth, segmentation, and edge guidance. Figure 1 from the paper.</figcaption>
+        </figure>
+    </section>
+
+    <section class="section container" id="overview" aria-labelledby="overview-title">
+      <div class="section-heading"><span class="section-number">01 / OVERVIEW</span><h2 id="overview-title">Style transfer, with finer control.</h2></div>
+      <div class="contributions">
+        <div><h3>Arbitrary styles</h3><p>Condition a latent diffusion model on a content image and a style reference to create a new stylization.</p></div>
+        <div><h3>Composable control</h3><p>Combine depth, segmentation, and edge guidance with Style-Adapters to preserve the details that matter.</p></div>
+        <div><h3>Consistent video</h3><p>Extend stylization across frames with temporal layers and a Harmonious Consistency training objective.</p></div>
+      </div>
+      <div class="abstract">
+        <h3>Abstract</h3>
+        <p>The goal of Arbitrary Style Transfer (AST) is injecting the artistic features of a style reference into a given image/video. Existing methods usually pursue the balance between style and content by adjusting general coarse-level stylized strength, thereby leading to unsatisfactory results and hindering their practical application. To address this critical issue, a novel AST approach namely <strong>Flexibly Controllable Arbitrary Style Transfer (FAST)</strong> is proposed, which is capable of explicitly customizing the stylization results according to various sources of semantic clues. In the specific, our model is constructed based on Latent Diffusion Model (LDM) and elaborately designed to absorb content and style instances as conditions of LDM. It is characterized by introducing <strong>Style-Adapter</strong>, which allows users to flexibly manipulate the stylization results via aligning multi-level style control information and intrinsic knowledge in LDM, meanwhile enhancing the model with improved capacity to harmonize content detail retention and stylization strength. Lastly, our model is extended to handle video AST task. A novel learning objective is leveraged for video diffusion model training, which considerably improves cross-frame temporal consistency on the premise of maintaining stylization strength. Qualitative and quantitative comparisons as well as user studies demonstrate our presented approach outperforms the existing SoTA methods in generating visually plausible stylization results.</p>
+      </div>
+    </section>
+
+    <section class="section section-tinted" id="method" aria-labelledby="method-title">
+      <div class="container">
+        <div class="section-heading"><span class="section-number">02 / METHOD</span><h2 id="method-title">A diffusion backbone. Composable adapters.</h2></div>
+        <p class="section-intro">Content and style encoders condition the diffusion U-Net. Style-Adapters inject structural guidance, while temporal layers extend the framework from images to videos.</p>
+        <figure class="paper-figure">
+          <a class="figure-link" href="./static/images/fast/framework.jpg" target="_blank" rel="noopener" aria-label="Enlarge: FAST architecture with content and style encoders, Style-Adapters, a diffusion U-Net, temporal layers, and a decoder.">
+            <img width="648" height="299" src="./static/images/fast/framework.jpg" alt="FAST architecture with content and style encoders, Style-Adapters, a diffusion U-Net, temporal layers, and a decoder." loading="lazy" decoding="async">
+            <span class="figure-zoom" aria-hidden="true">View full size ↗</span>
           </a>
-          <a class="navbar-item" href="https://latentfusion.github.io">
-            LatentFusion
+          <figcaption><strong>Framework overview.</strong> Style-Adapters align control signals with the diffusion backbone; temporal layers support video stylization. Figure 2 from the paper.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section container" id="results" aria-labelledby="results-title">
+      <div class="section-heading"><span class="section-number">03 / RESULTS</span><h2 id="results-title">From artistic images to stylized video.</h2></div>
+      <p class="section-intro">Selected qualitative results from the published paper. Follow each figure link to inspect the details at full size.</p>
+      <div class="result-block">
+        <h3>Image style transfer</h3>
+        <p>FAST transfers the appearance of a style reference while retaining the structure of the content image.</p>
+        <figure class="paper-figure">
+          <a class="figure-link" href="./static/images/fast/image-results.jpg" target="_blank" rel="noopener" aria-label="Enlarge: Qualitative comparison of FAST and other arbitrary image style transfer methods across content and style pairs.">
+            <img width="648" height="412" src="./static/images/fast/image-results.jpg" alt="Qualitative comparison of FAST and other arbitrary image style transfer methods across content and style pairs." loading="lazy" decoding="async">
+            <span class="figure-zoom" aria-hidden="true">View full size ↗</span>
           </a>
-          <a class="navbar-item" href="https://photoshape.github.io">
-            PhotoShape
+          <figcaption><strong>Image comparisons.</strong> Content images and style references are shown alongside competing methods and FAST. Figure 4 from the paper.</figcaption>
+        </figure>
+      </div>
+      <div class="result-block">
+        <h3>Control what stays. Choose what changes.</h3>
+        <p>Depth, semantic segmentation, and edge maps provide complementary guidance. Their adapters can be combined to customize the result.</p>
+        <figure class="paper-figure">
+          <a class="figure-link" href="./static/images/fast/control-maps.jpg" target="_blank" rel="noopener" aria-label="Enlarge: FAST image style transfer examples using different structural control maps.">
+            <img width="524" height="332" src="./static/images/fast/control-maps.jpg" alt="FAST image style transfer examples using different structural control maps." loading="lazy" decoding="async">
+            <span class="figure-zoom" aria-hidden="true">View full size ↗</span>
           </a>
-        </div>
+          <figcaption><strong>Controllable stylization.</strong> Different control maps guide the structure of the generated image. Figure 7 from the paper.</figcaption>
+        </figure>
+        <details class="more-results">
+          <summary>Explore guidance strength and adapter weights</summary>
+          <p>Classifier-free guidance factors and adapter weights offer further control over content preservation and stylization.</p>
+          <figure class="paper-figure">
+          <a class="figure-link" href="./static/images/fast/control-strength.jpg" target="_blank" rel="noopener" aria-label="Enlarge: FAST stylization results with different classifier-free guidance factors and Style-Adapter weights.">
+            <img width="455" height="296" src="./static/images/fast/control-strength.jpg" alt="FAST stylization results with different classifier-free guidance factors and Style-Adapter weights." loading="lazy" decoding="async">
+            <span class="figure-zoom" aria-hidden="true">View full size ↗</span>
+          </a>
+          <figcaption><strong>Adjustable guidance.</strong> Varying guidance factors and adapter weights changes the stylization. Figure 8 from the paper.</figcaption>
+        </figure>
+        </details>
       </div>
-    </div>
-
-  </div>
-</nav> -->
-
-
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">FAST: Flexibly Controllable Arbitrary Style Transfer via
-            Latent Diffusion models </h1>
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a href="wd1511.github.io">Hanzhang Wang</a><sup>1</sup>,</span>
-            <span class="author-block">
-              <a href="https://scholar.google.com.hk/citations?user=xfnL2IEAAAAJ&hl=zh-TW">Haoran Wang</a><sup>2</sup>,</span>
-            <span class="author-block">
-              <a href="https://scholar.google.com.hk/citations?user=i4PVpw4AAAAJ&hl=zh-CN">Zhongrui Yu</a><sup>3</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://rudaoshi.github.io/">Mingming Sun</a><sup>4</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://homepage.hit.edu.cn/jiangjunjun?lang=zh">Junjun Jiang</a><sup>1</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://homepage.hit.edu.cn/xmliu?lang=zh">Xianming Liu</a><sup>1</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://homepage.hit.edu.cn/zhaideming?lang=zh">Deming Zhai</a><sup>1</sup>
-            </span>
-          </div>
-
-          <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>Harbin Institute of Technology, Harbin, China</span>
-            <span class="author-block"><sup>2</sup>BGI Research, Beijing, China</span>
-            <span class="author-block"><sup>3</sup>ETH Zurich, Zurich, Switzerland</span>
-            <span class="author-block"><sup>4</sup>AGI Lab, Beijing Institute of Mathematical Sciences and Applications, Beijing, China</span>
-          </div>
-
-          <div class="column has-text-centered">
-            <div class="publication-links">
-              <!-- PDF Link. -->
-              <span class="link-block">
-                <a href="https://dl.acm.org/doi/abs/10.1145/3748655"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Paper</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="https://arxiv.org/abs/2401.05870"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>ArXiv</span>
-                </a>
-              </span>
-              <!-- Video Link. -->
-              <!-- <span class="link-block">
-                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-youtube"></i>
-                  </span>
-                  <span>Video</span>
-                </a>
-              </span> -->
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a href="https://github.com/wd1511/FAST"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code</span>
-                  </a>
-              </span>
-              <!-- Dataset Link. -->
-              <span class="link-block">
-                <a href="https://github.com/wd1511/FAST"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="far fa-images"></i>
-                  </span>
-                  <span>Data</span>
-                  </a>
-            </div>
-
-          </div>
-        </div>
+      <div class="result-block">
+        <h3>Video style transfer</h3>
+        <p>Temporal layers and Harmonious Consistency loss encourage coherence between frames while preserving the transferred style.</p>
+        <figure class="paper-figure">
+          <a class="figure-link" href="./static/images/fast/video-results.jpg" target="_blank" rel="noopener" aria-label="Enlarge: Sequences of stylized video frames produced by FAST with multiple artistic styles.">
+            <img width="588" height="305" src="./static/images/fast/video-results.jpg" alt="Sequences of stylized video frames produced by FAST with multiple artistic styles." loading="lazy" decoding="async">
+            <span class="figure-zoom" aria-hidden="true">View full size ↗</span>
+          </a>
+          <figcaption><strong>Video results.</strong> Selected frames illustrate stylization across time. Figure 6 from the paper.</figcaption>
+        </figure>
       </div>
-    </div>
-  </div>
-</section>
+      <p class="source-note">Figures 1, 2, 4, 6, 7, and 8 from <a href="https://doi.org/10.1145/3748655">Wang et al., ACM TOMM (2025)</a>. See the paper for evaluation settings and quantitative comparisons.</p>
+    </section>
 
-<!-- <section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered">
-        <span class="dnerf">Nerfies</span> turns selfie videos from your phone into
-        free-viewpoint
-        portraits.
-      </h2>
-    </div>
-  </div>
-</section> -->
-
-
-<section class="hero is-light is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-steve">
-          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/steve.mp4"
-                    type="video/mp4">
-          </video>
+    <section class="section section-tinted" id="BibTeX" aria-labelledby="citation-title">
+      <div class="container">
+        <div class="citation-heading">
+          <div class="section-heading"><span class="section-number">04 / CITATION</span><h2 id="citation-title">Cite this work</h2></div>
+          <button class="button copy-button" type="button" id="copy-bibtex" hidden>Copy BibTeX</button>
         </div>
-        <div class="item item-chair-tp">
-          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/chair-tp.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-shiba">
-          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/shiba.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-fullbody">
-          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/fullbody.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-blueshirt">
-          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/blueshirt.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-mask">
-          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/mask.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-coffee">
-          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/coffee.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-toby">
-          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/toby2.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            The goal of Arbitrary Style Transfer (AST) is injecting the artistic features of a style reference into a 
-            given image/video. Existing methods usually pursue the balance between style and content by adjusting general 
-            coarse-level stylized strength, thereby leading to unsatisfactory results and hindering their practical 
-            application. To address this critical issue, a novel AST approach namely <strong>F</strong>lexibly 
-            Controllable <strong>A</strong>rbitrary <strong>S</strong>tyle <strong>T</strong>ransfer (<strong>FAST</strong>) 
-            is proposed, which is capable of explicitly customizing the stylization results according to various source of 
-            semantic clues. In the specific, our model is constructed based on Latent Diffusion Model (LDM) and elaborately 
-            designed to absorb content and style instance as conditions of LDM. It is characterized by introducing of 
-            <strong>Style-Adapter</strong>, which allows users to flexibly manipulate the stylization results via aligning 
-            multi-level style control information and intrinsic knowledge in LDM, meanwhile enhancing the model with improved 
-            capacity to harmonize content detail retention and stylization strength. Lastly, our model is extended to handle 
-            video AST task. A novel learning objective is leveraged for video diffusion model training, which considerably 
-            improve cross-frame temporal consistency on the premise of maintaining stylization strength. Qualitative and 
-            quantitative comparisons as well as user studies demonstrate our presented approach outperforms the existing 
-            SoTA methods in generating visually plausible stylization results. The project homepage for the paper is available 
-            at: https://fast-ldm.github.io/.
-          </p>
-        </div>
-      </div>
-    </div>
-    <!--/ Abstract. -->
-
-    <!-- Paper video. -->
-    <!-- <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
-                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div> -->
-    <!--/ Paper video. -->
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-
-    <div class="columns is-centered">
-
-      <!-- Visual Effects. -->
-      <div class="column">
-        <div class="content">
-          <h2 class="title is-3">Visual Effects</h2>
-          <p>
-            Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
-            would be impossible without nerfies since it would require going through a wall.
-          </p>
-          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/dollyzoom-stacked.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-      <!--/ Visual Effects. -->
-
-      <!-- Matting. -->
-      <div class="column">
-        <h2 class="title is-3">Matting</h2>
-        <div class="columns is-centered">
-          <div class="column content">
-            <p>
-              As a byproduct of our method, we can also solve the matting problem by ignoring
-              samples that fall outside of a bounding box during rendering.
-            </p>
-            <video id="matting-video" controls playsinline height="100%">
-              <source src="./static/videos/matting.mp4"
-                      type="video/mp4">
-            </video>
-          </div>
-
-        </div>
-      </div>
-    </div>
-    <!--/ Matting. -->
-
-    <!-- Animation. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Animation</h2>
-
-        <!-- Interpolating. -->
-        <h3 class="title is-4">Interpolating states</h3>
-        <div class="content has-text-justified">
-          <p>
-            We can also animate the scene by interpolating the deformation latent codes of two input
-            frames. Use the slider here to linearly interpolate between the left frame and the right
-            frame.
-          </p>
-        </div>
-        <div class="columns is-vcentered interpolation-panel">
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_start.jpg"
-                 class="interpolation-image"
-                 alt="Interpolate start reference image."/>
-            <p>Start Frame</p>
-          </div>
-          <div class="column interpolation-video-column">
-            <div id="interpolation-image-wrapper">
-              Loading...
-            </div>
-            <input class="slider is-fullwidth is-large is-info"
-                   id="interpolation-slider"
-                   step="1" min="0" max="100" value="0" type="range">
-          </div>
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_end.jpg"
-                 class="interpolation-image"
-                 alt="Interpolation end reference image."/>
-            <p class="is-bold">End Frame</p>
-          </div>
-        </div>
-        <br/>
-        <!--/ Interpolating. -->
-
-        <!-- Re-rendering. -->
-        <h3 class="title is-4">Re-rendering the input video</h3>
-        <div class="content has-text-justified">
-          <p>
-            Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel
-            viewpoint such as a stabilized camera by playing back the training deformations.
-          </p>
-        </div>
-        <div class="content has-text-centered">
-          <video id="replay-video"
-                 controls
-                 muted
-                 preload
-                 playsinline
-                 width="75%">
-            <source src="./static/videos/replay.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <!--/ Re-rendering. -->
-
-      </div>
-    </div>
-    <!--/ Animation. -->
-
-
-    <!-- Concurrent Work. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Related Links</h2>
-
-        <div class="content has-text-justified">
-          <p>
-            There's a lot of excellent work that was introduced around the same time as ours.
-          </p>
-          <p>
-            <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a> introduces an idea similar to our windowed position encoding for coarse-to-fine optimization.
-          </p>
-          <p>
-            <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>
-            both use deformation fields to model non-rigid scenes.
-          </p>
-          <p>
-            Some works model videos with a NeRF by directly modulating the density, such as <a href="https://video-nerf.github.io/">Video-NeRF</a>, <a href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a href="https://neural-3d-video.github.io/">DyNeRF</a>
-          </p>
-          <p>
-            There are probably many more by the time you are reading this. Check out <a href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>, and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF papers</a>.
-          </p>
-        </div>
-      </div>
-    </div>
-    <!--/ Concurrent Work. -->
-
-  </div>
-</section>
-
-
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <pre><code>@article{wang2025fast,
-  title={FAST: Flexibly Controllable Arbitrary Style Transfer via Latent Diffusion models},
-  author={Wang, Hanzhang and Wang, Haoran and Yu, Zhongrui and Sun, Mingming and Jiang, Junjun and Liu, Xianming and Zhai, Deming},
-  journal={ACM Transactions on Multimedia Computing, Communications and Applications},
-  publisher={ACM New York, NY},
-  year={2025},
+        <p>If you find FAST useful in your research, please cite our paper.</p>
+        <pre tabindex="0" aria-label="BibTeX citation"><code id="bibtex">@article{wang2025fast,
+  title = {{FAST}: Flexibly Controllable Arbitrary Style Transfer via Latent Diffusion Models},
+  author = {Wang, Hanzhang and Wang, Haoran and Yu, Zhongrui and Sun, Mingming and Jiang, Junjun and Liu, Xianming and Zhai, Deming},
+  journal = {ACM Transactions on Multimedia Computing, Communications, and Applications},
+  volume = {21},
+  number = {9},
+  articleno = {268},
+  numpages = {20},
+  year = {2025},
+  month = sep,
+  publisher = {Association for Computing Machinery},
+  doi = {10.1145/3748655},
+  url = {https://doi.org/10.1145/3748655}
 }</code></pre>
-  </div>
-</section>
-
-
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <a class="icon-link"
-         href="https://dl.acm.org/doi/abs/10.1145/3748655">
-        <i class="fas fa-file-pdf"></i>
-      </a>
-      <a class="icon-link" href="https://github.com/wd1511" class="external-link" disabled>
-        <i class="fab fa-github"></i>
-      </a>
-    </div>
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            This means you are free to borrow the <a
-              href="https://github.com/fast-ldm/fast-ldm.github.io">source code</a> of this website,
-            we just ask that you link back to this page in the footer.
-            Please remember to remove the analytics code included in the header of the website which
-            you do not want on your website.
-          </p>
-        </div>
+        <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+        <p class="doi-link">DOI: <a href="https://doi.org/10.1145/3748655">10.1145/3748655</a></p>
       </div>
-    </div>
-  </div>
-</footer>
+    </section>
+  </main>
 
+  <footer class="site-footer container">
+    <a class="wordmark" href="#top" aria-label="Back to top">FAST<span class="wordmark-dot">.</span></a>
+    <div>
+      <p><a href="https://github.com/fast-ldm/fast-ldm.github.io">Website source</a> · Adapted from <a href="https://nerfies.github.io/">Nerfies</a>.</p>
+      <p>Website licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Paper figures retain their original rights.</p>
+    </div>
+  </footer>
 </body>
 </html>
