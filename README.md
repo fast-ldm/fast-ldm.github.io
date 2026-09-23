@@ -42,3 +42,4 @@ The images in `static/images/fast/` are Figures 1, 2, 4, 6, 7, and 8 from the pu
 ## Website license
 
 Website code is licensed under [Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/), with attribution to the original [Nerfies website](https://nerfies.github.io/). Paper figures retain their original rights.
+
