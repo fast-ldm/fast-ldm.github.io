@@ -10,15 +10,9 @@ ACM Transactions on Multimedia Computing, Communications, and Applications, 21(9
 
 The previously linked [arXiv:2401.05870](https://arxiv.org/abs/2401.05870) is titled **HiCAST** (2024); the website labels it as earlier work separately from the published FAST article.
 
-## Local preview
+## GitHub Pages
 
-This is a static website with no build step or external runtime dependencies.
-
-```sh
-python3 -m http.server 8000 --bind 127.0.0.1
-```
-
-Open http://127.0.0.1:8000 in a browser. GitHub Pages serves `index.html` from this repository.
+GitHub Pages serves `index.html` from this repository.
 
 ## Citation
 
