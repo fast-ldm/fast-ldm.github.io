@@ -6,7 +6,9 @@ Source for the [FAST project website](https://fast-ldm.github.io/).
 
 ACM Transactions on Multimedia Computing, Communications, and Applications, 21(9), Article 268, September 2025.
 
-[Paper](https://doi.org/10.1145/3748655) · [PDF](https://dl.acm.org/doi/pdf/10.1145/3748655) · [Code](https://github.com/wd1511/FAST)
+[Paper](https://doi.org/10.1145/3748655) · [PDF](https://dl.acm.org/doi/pdf/10.1145/3748655) · [Code](https://github.com/wd1511/FAST) · [Hugging Face](https://huggingface.co/wd1511/fast-ldm) · [Baidu Netdisk](https://pan.baidu.com/s/1q6lgOszfOS-p0OmOzhhYWg)
+
+Hugging Face hosts checkpoints, pretrained models, and annotators. Baidu Netdisk provides models, datasets, and the Linux environment; the access code is `hcsc`. See the [asset setup guide](https://github.com/wd1511/FAST/blob/main/docs/ASSETS.md) for download and placement instructions.
 
 The previously linked [arXiv:2401.05870](https://arxiv.org/abs/2401.05870) is titled **HiCAST** (2024); the website labels it as earlier work separately from the published FAST article.
 
@@ -42,4 +44,3 @@ The images in `static/images/fast/` are Figures 1, 2, 4, 6, 7, and 8 from the pu
 ## Website license
 
 Website code is licensed under [Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/), with attribution to the original [Nerfies website](https://nerfies.github.io/). Paper figures retain their original rights.
-
